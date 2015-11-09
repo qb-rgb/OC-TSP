@@ -20,4 +20,23 @@ class Instance(val nbElem: Int, val costs: List[Vector[Vector[Int]]]) {
     else
       this.costs(obj)(j)(i)
 
+  /** Get the cost of a given element order for the instance.
+    *
+    * @param order order of the element of the instance
+    * @return cost of the given order
+    */
+  def costForOrder(order: List[Int]): Int = {
+    require(order.length == this.nbElem)
+
+    def getSum(i: Int, j: Int): Int =
+      (for (cost <- this.costs) yield cost(i)(j)).sum
+
+    def sumOrder(order: List[Int], res: Int): Int = order match {
+      case i :: j :: tail => sumOrder(order.tail, getSum(i, j))
+      case _              => res
+    }
+
+    sumOrder(order :+ order.head, 0)
+  }
+
 }
