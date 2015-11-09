@@ -17,8 +17,9 @@ object InstanceBuilder {
     val source = Source.fromFile(filePath)
     val lines = try
       source.getLines.toList
-    catch
+    catch {
       case e: Exception => List("")
+    }
 
     source.close()
 
