@@ -70,7 +70,7 @@ object InstanceBuilder {
       content => this.groupLines(content, Nil, Nil, 0, 0)
     }
 
-    new Instance(groupedContent map processContent)
+    new Instance(this.nbElem, groupedContent map processContent)
   }
 
 }

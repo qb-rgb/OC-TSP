@@ -5,7 +5,7 @@ package tsp
   * @constructor create a new Instance.
   * @param costs cost of the several objectives of the instance
   */
-class Instance(val costs: List[Vector[Vector[Int]]]) {
+class Instance(val nbElem: Int, val costs: List[Vector[Vector[Int]]]) {
 
   /** Give the cost between two elements for a given objective.
     *
