@@ -29,10 +29,12 @@ class Instance(val nbElem: Int, val costs: List[Vector[Vector[Int]]]) {
     require(order.length == this.nbElem)
 
     def getSum(i: Int, j: Int): Int =
-      (for (cost <- this.costs) yield cost(i)(j)).sum
+      (for {
+        cost <- 0 until this.costs.length
+      } yield this.getCostFor(cost, i, j)).sum
 
     def sumOrder(order: List[Int], res: Int): Int = order match {
-      case i :: j :: tail => sumOrder(order.tail, getSum(i, j))
+      case i :: j :: tail => sumOrder(tail, getSum(i, j))
       case _              => res
     }
 
