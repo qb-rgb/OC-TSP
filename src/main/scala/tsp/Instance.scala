@@ -16,9 +16,9 @@ class Instance(val nbElem: Int, val costs: List[Vector[Vector[Int]]]) {
     */
   def getCostFor(obj: Int, i: Int, j: Int): Int =
     if (i <= j)
-      this.costs(obj)(i)(j)
+      this.costs(obj)(i)(j - i)
     else
-      this.costs(obj)(j)(i)
+      this.costs(obj)(j)(i - j)
 
   /** Get the cost of a given element order for the instance.
     *
@@ -34,7 +34,7 @@ class Instance(val nbElem: Int, val costs: List[Vector[Vector[Int]]]) {
       } yield this.getCostFor(cost, i, j)).sum
 
     def sumOrder(order: List[Int], res: Int): Int = order match {
-      case i :: j :: tail => sumOrder(tail, getSum(i, j))
+      case i :: j :: tail => sumOrder(j :: tail, res + getSum(i, j))
       case _              => res
     }
 
