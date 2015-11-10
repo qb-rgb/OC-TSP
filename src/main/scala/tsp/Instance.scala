@@ -34,7 +34,7 @@ class Instance(val nbElem: Int, val costs: List[Vector[Vector[Int]]]) {
     }
 
     (
-      for (cost <- 0 until this.costs.length) yield sumOrder(order, cost, 0)
+      for (cost <- 0 until this.costs.length) yield sumOrder(order :+ order.head, cost, 0)
     ).toList
   }
 
