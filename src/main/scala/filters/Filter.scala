@@ -1,9 +1,12 @@
 package filters
 
-import tsp.Solution
+import tsp.{Solution, Instance}
 
-/** Represent a filter of TSP solution. */
-trait Filter {
+/** Represent a filter of TSP solution.
+  *
+  * @param instance instance to evaluate the solutions
+  */
+abstract class Filter(val instance: Instance) {
 
   /** Filter a set of TSP solutions and yield the non-dominated ones.
     *
