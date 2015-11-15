@@ -10,7 +10,7 @@ object RandomSolutionGenerator {
     * @param length length of the solution to Generate
     * @return random solution with the given length
     */
-  def generateRandomSolution(length: Int): Solution =
+  def generate(length: Int): Solution =
     Random shuffle (0 until length).toList
 
 }
