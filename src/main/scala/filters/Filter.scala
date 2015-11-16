@@ -17,6 +17,13 @@ abstract class Filter(val instance: Instance) {
     */
   def filter(solutions: Set[Solution]): Set[Solution]
 
+  /** Write two gnuplot file with the results of the filter.
+    * The two files are dominated.dat which contains the data of the dominated
+    * solutions and non-dominated.dat which contains the data of the non-dominated
+    * solutions.
+    *
+    * @param solutions set of solutions from which build the files
+    */
   def exportToGnuplotWith(solutions: Set[Solution]): Unit = {
     val nonDominatedSolutions = this filter solutions
     val dominatedSolutions = solutions -- nonDominatedSolutions
