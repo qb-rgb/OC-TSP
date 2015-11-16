@@ -19,4 +19,9 @@ package object tsp {
     List("data/randomE100.tsp", "data/randomF100.tsp")
   )
 
+  def domine(s1Cost: Vector[Int], s2Cost: Vector[Int]): Boolean =
+    (s1Cost zip s2Cost) forall {
+      case (s1Cost, s2Cost) => s1Cost <= s2Cost
+    }
+
 }
