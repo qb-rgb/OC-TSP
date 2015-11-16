@@ -31,27 +31,22 @@ abstract class Filter(val instance: Instance) {
     def processSolution(sCosts: Vector[Int]): String =
       sCosts mkString "\t"
 
-    // non-dominated.dat
+    def writeFile(filename: String, content: Set[Solution]): Unit = {
+      val file = new File(filename)
+      val bw = new BufferedWriter(new FileWriter(file))
+      val text = content map {
+        solution => processSolution(this.instance solutionCosts solution)
+      }
 
-    val nonDominatedFile = new File("non-dominated.dat")
-    val bw1 = new BufferedWriter(new FileWriter(nonDominatedFile))
-    val nonDominatedText = nonDominatedSolutions map {
-      solution => processSolution(this.instance solutionCosts solution)
+      bw write (text mkString "\n")
+      bw.close
     }
 
-    bw1 write (nonDominatedText mkString "\n")
-    bw1.close
+    // non-dominated.dat
+    writeFile("non-dominated.dat", nonDominatedSolutions)
 
     // dominated.dat
-
-    val dominatedFile = new File("non-dominated.dat")
-    val bw2 = new BufferedWriter(new FileWriter(dominatedFile))
-    val dominatedText = dominatedSolutions map {
-      solution => processSolution(this.instance solutionCosts solution)
-    }
-
-    bw2 write (dominatedText mkString "\n")
-    bw2.close
+    writeFile("dominated.dat", dominatedSolutions)
   }
 
 }
