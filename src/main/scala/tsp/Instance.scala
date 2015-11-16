@@ -3,6 +3,7 @@ package tsp
 /** Represent an instance of the TSP problem.
   *
   * @constructor create a new Instance.
+  * @param nbElem amount of elements a solution of this instance must have
   * @param costs cost of the several objectives of the instance
   */
 class Instance(val nbElem: Int, val costs: List[Vector[Vector[Int]]]) {
