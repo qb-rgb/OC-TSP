@@ -8,6 +8,9 @@ package tsp
   */
 class Instance(val nbElem: Int, val costs: List[Vector[Vector[Int]]]) {
 
+  /** Number of objectifs the instance have. */
+  val nbObjectives: Int = this.costs.length
+
   /** Give the cost between two elements for a given objective.
     *
     * @param obj objective
