@@ -29,7 +29,7 @@ class Instance(val nbElem: Int, val costs: List[Vector[Vector[Int]]]) {
     * @param solution solution of the instance
     * @return cost of the given solution for each objectives
     */
-  def solutionCosts(solution: Solution): List[Int] = {
+  def solutionCosts(solution: Solution): Vector[Int] = {
     require(solution.length == this.nbElem)
 
     def sumOrder(solution: Solution, obj: Int, res: Int): Int = solution match {
@@ -39,7 +39,7 @@ class Instance(val nbElem: Int, val costs: List[Vector[Vector[Int]]]) {
 
     (for {
       cost <- 0 until this.costs.length
-    } yield sumOrder(solution :+ solution.head, cost, 0)).toList
+    } yield sumOrder(solution :+ solution.head, cost, 0)).toVector
   }
 
 }
