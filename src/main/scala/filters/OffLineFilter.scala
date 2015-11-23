@@ -23,8 +23,9 @@ class OffLineFilter(override val instance: Instance) extends Filter(instance) {
         res
       else {
         val couple@(solution, costs) = toTreat.head
-        val othersCosts = (solutionsAndCosts diff List(couple)) map { _._2 }
-        val toCompare = othersCosts map { otherCosts => (costs, otherCosts) }
+        val toCompare = solutionsAndCosts map {
+          case (_, otherCosts) => (costs, otherCosts)
+        }
         val isDominated = toCompare exists {
           case (costs, otherCosts) => domine(otherCosts, costs)
         }
