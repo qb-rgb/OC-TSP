@@ -6,7 +6,7 @@ package neighbourhood
   * @constructor create a new selector.
   * @param costFunction cost function to maximize
   */
-abstract class Selector[T](val costFunction: List[T] => Int) {
+abstract class Selector[T](val costFunction: List[T] => Double) {
 
   /** Selection strategy of a neighbour from a list.
     *

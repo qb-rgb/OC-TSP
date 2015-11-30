@@ -5,11 +5,13 @@ package neighbourhood
   * @constructor create a new best improvement selector.
   * @param costFunction cost function to maximize
   */
-class BestImprovementSelector[T](override val costFunction: List[T] => Int) extends Selector(costFunction) {
+class BestImprovementSelector[T](
+  override val costFunction: List[T] => Double
+) extends Selector(costFunction) {
 
   /** @see neighbourhood.Selector.select() */
   def select(refElem: List[T], neighbourhood: Stream[List[T]]): List[T] = {
-    def innerSelect(refScore: Int, refE: List[T], n: Stream[List[T]]): List[T] = {
+    def innerSelect(refScore: Double, refE: List[T], n: Stream[List[T]]): List[T] = {
       if (n.isEmpty)
         refE
       else {
