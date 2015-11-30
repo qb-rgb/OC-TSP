@@ -1,7 +1,8 @@
 package schedulers
 
 import tsp.{Instance, Solution, RandomSolutionGenerator}
-import neighbourhood.{NeighbourhoodBuilder, BestImprovementSelector}
+import neighbourhood.{NeighbourhoodBuilder, FirstImprovementSelector}
+import filters.OnLineFilter
 import java.io.{File, BufferedWriter, FileWriter}
 
 /** Hill climbing approximator of the pareto front.
@@ -42,7 +43,7 @@ class HillClimbingApproximator(
     solution: Solution,
     costFunc: Solution => Double
   ): Solution = {
-    val selector = new BestImprovementSelector(costFunc)
+    val selector = new FirstImprovementSelector(costFunc)
 
     def innerApproximate(current: Solution, previous: Solution): Solution =
       if (current == previous)
@@ -60,8 +61,7 @@ class HillClimbingApproximator(
   // Find a pareto front approximation and possibly print avancement
   private def findParetoFrontApproximation(doPrint: Boolean): Set[Solution] = {
     val totalSize = this.weightsVectors.size
-
-    this.weightsVectors.foldLeft(Set[Solution]()){
+    val solutions = this.weightsVectors.foldLeft(Set[Solution]()){
       case (acc, weights) => {
         if (doPrint) print("\t[" + acc.size * 100 / totalSize + "%]\r")
         val randomSol = RandomSolutionGenerator generate this.instance.nbElem
@@ -70,6 +70,12 @@ class HillClimbingApproximator(
         acc + this.findBestApproximationFrom(randomSol, costFunc)
       }
     }
+
+    if (doPrint) println("\n\tFiltering...")
+    val finalSol = new OnLineFilter(this.instance) filter solutions
+
+    if (doPrint) println("\tDone.")
+    finalSol
   }
 
   /** Find a pareto front approximation with the weights vectors.
@@ -98,7 +104,7 @@ class HillClimbingApproximator(
     val startTime = System.currentTimeMillis
     writeFile("hillclimbing.dat", this.findParetoFrontApproximation(true))
     val endTime = System.currentTimeMillis
-    println(endTime - startTime + " ms")
+    println("\texecution time: " + (endTime - startTime) + " ms")
   }
 
 }
