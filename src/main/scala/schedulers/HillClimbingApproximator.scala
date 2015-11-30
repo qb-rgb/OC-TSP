@@ -57,20 +57,27 @@ class HillClimbingApproximator(
     innerApproximate(solution, Nil)
   }
 
-  /** Find a pareto front approximation with the weights vectors.
-    *
-    * @return set of solution which compose the pareto front approximation
-    */
-  def findParetoFrontApproximation: Set[Solution] =
+  // Find a pareto front approximation and possibly print avancement
+  private def findParetoFrontApproximation(doPrint: Boolean): Set[Solution] = {
+    val totalSize = this.weightsVectors.size
+
     this.weightsVectors.foldLeft(Set[Solution]()){
       case (acc, weights) => {
-        print(" [" + acc.size * 100 / this.weightsVectors.size + "%]\r")
+        if (doPrint) print("\t[" + acc.size * 100 / totalSize + "%]\r")
         val randomSol = RandomSolutionGenerator generate this.instance.nbElem
         val costFunc = this.createFuncWith(weights)
 
         acc + this.findBestApproximationFrom(randomSol, costFunc)
       }
     }
+  }
+
+  /** Find a pareto front approximation with the weights vectors.
+    *
+    * @return set of solution which compose the pareto front approximation
+    */
+  def findParetoFrontApproximation: Set[Solution] =
+    this.findParetoFrontApproximation(false)
 
   /** Create a file with the HillClimbingApproximator pareto front approximation. */
   def writeGnuplotFile: Unit = {
@@ -88,7 +95,10 @@ class HillClimbingApproximator(
       bw.close
     }
 
-    writeFile("hillclimbing.dat", this.findParetoFrontApproximation)
+    val startTime = System.currentTimeMillis
+    writeFile("hillclimbing.dat", this.findParetoFrontApproximation(true))
+    val endTime = System.currentTimeMillis
+    println(endTime - startTime + " ms")
   }
 
 }
