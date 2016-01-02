@@ -5,7 +5,9 @@ package object schedulers {
     *
     * @return set of generated vectors
     */
-  def generateTwoDimensionsWeightsVectors: Set[Vector[Double]] =
-    (for (i <- 0.00 to 1.00 by 0.01) yield Vector(i, 1.00 - i)).toSet
+  def generateTwoDimensionsWeightsVectors(n: Int): Set[Vector[Double]] = {
+    val step = 1.0 / n
+    (for (i <- 0.0 to 1.0 by step) yield Vector(i, 1.0 - i)).toSet
+  }
 
 }

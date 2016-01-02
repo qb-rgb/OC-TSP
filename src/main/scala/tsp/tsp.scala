@@ -6,16 +6,19 @@ package object tsp {
 
   /** Instance with objectives A and B. */
   val randomAB100 = InstanceBuilder.buildFrom(
+    "randomAB100",
     List("data/randomA100.tsp", "data/randomB100.tsp")
   )
 
   /** Instance with objectives C and D. */
   val randomCD100 = InstanceBuilder.buildFrom(
+    "randomCD100",
     List("data/randomC100.tsp", "data/randomD100.tsp")
   )
 
   /** Instance with objectives E and F. */
   val randomEF100 = InstanceBuilder.buildFrom(
+    "randomEF100",
     List("data/randomE100.tsp", "data/randomF100.tsp")
   )
 

@@ -62,7 +62,7 @@ object InstanceBuilder {
     * @param filesNames list of files which contain the objectives costs of the
     *                   instance
     */
-  def buildFrom(filesPaths: List[String]): Instance = {
+  def buildFrom(name: String, filesPaths: List[String]): Instance = {
     // Content of the files
     val contents = filesPaths map getFileContent
     // Content of the files grouped by elem
@@ -70,7 +70,7 @@ object InstanceBuilder {
       content => this.groupLines(content, Nil, Nil, 0, 0)
     }
 
-    new Instance(this.nbElem, groupedContent map processContent)
+    new Instance(name, this.nbElem, groupedContent map processContent)
   }
 
 }

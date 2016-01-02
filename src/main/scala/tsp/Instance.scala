@@ -6,7 +6,11 @@ package tsp
   * @param nbElem amount of elements a solution of this instance must have
   * @param costs cost of the several objectives of the instance
   */
-class Instance(val nbElem: Int, val costs: List[Vector[Vector[Int]]]) {
+class Instance(
+  val name: String,
+  val nbElem: Int,
+  val costs: List[Vector[Vector[Int]]]
+) {
 
   /** Number of objectifs the instance have. */
   val nbObjectives: Int = this.costs.length
@@ -41,5 +45,7 @@ class Instance(val nbElem: Int, val costs: List[Vector[Vector[Int]]]) {
       cost <- 0 until this.costs.length
     } yield sumOrder(solution :+ solution.head, cost, 0)).toVector
   }
+
+  override def toString: String = this.name
 
 }

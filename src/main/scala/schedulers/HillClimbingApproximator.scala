@@ -2,7 +2,7 @@ package schedulers
 
 import tsp.{Instance, Solution, RandomSolutionGenerator}
 import neighbourhood.{NeighbourhoodBuilder, FirstImprovementSelector}
-import filters.OnLineFilter
+import filters.OffLineFilter
 import java.io.{File, BufferedWriter, FileWriter}
 
 /** Hill climbing approximator of the pareto front.
@@ -17,7 +17,7 @@ class HillClimbingApproximator(
   val instance: Instance,
   val neighbourhoodBuilder: NeighbourhoodBuilder,
   val weightsVectors: Set[Vector[Double]]
-) {
+) extends Scheduler {
 
   // Each weight vector must have the sae dimension as the instance
   require(
@@ -72,7 +72,7 @@ class HillClimbingApproximator(
     }
 
     if (doPrint) println("\n\tFiltering...")
-    val finalSol = new OnLineFilter(this.instance) filter solutions
+    val finalSol = new OffLineFilter(this.instance) filter solutions
 
     if (doPrint) println("\tDone.")
     finalSol
@@ -101,8 +101,11 @@ class HillClimbingApproximator(
       bw.close
     }
 
+    // Write the gnuplot script
+    this.writeGnuplotScript(this.instance.toString)
+
     val startTime = System.currentTimeMillis
-    writeFile("hillclimbing.dat", this.findParetoFrontApproximation(true))
+    writeFile("pareto.dat", this.findParetoFrontApproximation(true))
     val endTime = System.currentTimeMillis
     println("\texecution time: " + (endTime - startTime) + " ms")
   }
